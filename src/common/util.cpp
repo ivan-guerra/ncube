@@ -41,13 +41,13 @@ static constexpr double kPi = 3.1415926535;
   };
 }
 
-Faces2D Get2DProjection(const Faces3D &faces, const ViewConfig &conf,
+Faces2D Get2DProjection(const Cube &cube, const ViewConfig &conf,
                         double cursor_x, double cursor_y) {
   const double kCursorXRatio = (cursor_x / conf.near_plane_width) * kPi;
   const double kCursorYRatio = (cursor_y / conf.near_plane_height) * kPi;
 
   ncube::Faces2D cube_faces_2d;
-  for (const Face3D &face_3d : faces) {
+  for (const Face3D &face_3d : cube.GetFaces()) {
     ncube::Face2D face_2d;
     for (const Point3D &point : face_3d) {
       /* create the rotated 3D point */

@@ -10,3 +10,5 @@ add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME} PRIVATE util.cpp)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${NCUBE_INCLUDE_DIR})
+
+target_link_libraries(${PROJECT_NAME} PRIVATE cube)

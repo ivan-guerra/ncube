@@ -69,7 +69,7 @@ void DrawObject(const Faces2D& faces) {
 
 void DrawInstructions(const ScreenDimension& screen_dim) {
   mvprintw(screen_dim.height - 1, 0, "%s",
-           "use the arrow keys to rotate the shape, press q to quit");
+           "use the arrow keys to rotate the cube, press q to quit");
   refresh();
 }
 

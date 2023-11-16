@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(
-  shapes
-  DESCRIPTION "shape definitions"
+  cube
+  DESCRIPTION "representation of a 3D cube"
   LANGUAGES CXX)
 
 add_library(${PROJECT_NAME} STATIC)
