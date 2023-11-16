@@ -3,7 +3,7 @@
 
 #include <vector>
 
-namespace nshapes {
+namespace ncube {
 
 struct Point2D {
   double x = 0.0;
@@ -34,6 +34,6 @@ using Face3D = std::vector<Point3D>;
 using Faces2D = std::vector<Face2D>;
 using Faces3D = std::vector<Face3D>;
 
-}  // namespace nshapes
+}  // namespace ncube
 
 #endif

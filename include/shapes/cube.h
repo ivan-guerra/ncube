@@ -3,12 +3,12 @@
 
 #include "common/types.h"
 
-namespace nshapes {
+namespace ncube {
 namespace shapes {
 
 extern const Faces3D kCube;
 
 }  // namespace shapes
-}  // namespace nshapes
+}  // namespace ncube
 
 #endif

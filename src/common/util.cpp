@@ -4,7 +4,7 @@
 
 #include "common/types.h"
 
-namespace nshapes {
+namespace ncube {
 
 static constexpr double kPi = 3.1415926535;
 
@@ -46,9 +46,9 @@ Faces2D Get2DProjection(const Faces3D &faces, const ViewConfig &conf,
   const double kCursorXRatio = (cursor_x / conf.near_plane_width) * kPi;
   const double kCursorYRatio = (cursor_y / conf.near_plane_height) * kPi;
 
-  nshapes::Faces2D cube_faces_2d;
+  ncube::Faces2D cube_faces_2d;
   for (const Face3D &face_3d : faces) {
-    nshapes::Face2D face_2d;
+    ncube::Face2D face_2d;
     for (const Point3D &point : face_3d) {
       /* create the rotated 3D point */
       Point3D rotated_point = Rotate3D(
@@ -77,4 +77,4 @@ Faces2D Get2DProjection(const Faces3D &faces, const ViewConfig &conf,
   return cube_faces_2d;
 }
 
-}  // namespace nshapes
+}  // namespace ncube

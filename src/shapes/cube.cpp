@@ -1,6 +1,6 @@
 #include "shapes/cube.h"
 
-namespace nshapes {
+namespace ncube {
 namespace shapes {
 
 const Faces3D kCube = {
@@ -35,4 +35,4 @@ const Faces3D kCube = {
 };
 
 }  // namespace shapes
-}  // namespace nshapes
+}  // namespace ncube

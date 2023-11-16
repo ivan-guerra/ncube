@@ -3,12 +3,12 @@
 
 #include "common/types.h"
 
-namespace nshapes {
+namespace ncube {
 
 [[nodiscard]] Faces2D Get2DProjection(const Faces3D &faces,
                                       const ViewConfig &conf, double cursor_x,
                                       double cursor_y);
 
-}  // namespace nshapes
+}  // namespace ncube
 
 #endif

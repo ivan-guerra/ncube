@@ -5,7 +5,7 @@ source config.sh
 Main()
 {
     # Create the build directory if it does not already exist.
-    mkdir -pv $NSHAPES_BUILD_DIR
+    mkdir -pv $NCUBE_BUILD_DIR
 
     # Set the build type according to the first program arg if any.
     BUILD_TYPE="Release"
@@ -14,10 +14,10 @@ Main()
         BUILD_TYPE=$1
     fi
 
-    pushd $NSHAPES_BUILD_DIR > /dev/null
+    pushd $NCUBE_BUILD_DIR > /dev/null
     cmake ../ \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
-        -DCMAKE_INSTALL_PREFIX=$NSHAPES_BIN_DIR \
+        -DCMAKE_INSTALL_PREFIX=$NCUBE_BIN_DIR \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
         make -j$(nproc) all && \
         make install

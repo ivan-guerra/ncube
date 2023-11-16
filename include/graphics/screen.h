@@ -3,7 +3,7 @@
 
 #include "common/types.h"
 
-namespace nshapes {
+namespace ncube {
 namespace graphics {
 
 struct ScreenDimension {
@@ -27,6 +27,6 @@ void DrawObject(const Faces2D& faces);
 void DrawInstructions(const ScreenDimension& screen_dim);
 
 }  // namespace graphics
-}  // namespace nshapes
+}  // namespace ncube
 
 #endif

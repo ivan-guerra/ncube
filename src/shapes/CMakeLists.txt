@@ -9,4 +9,4 @@ add_library(${PROJECT_NAME} STATIC)
 
 target_sources(${PROJECT_NAME} PRIVATE cube.cpp)
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${NSHAPES_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC ${NCUBE_INCLUDE_DIR})

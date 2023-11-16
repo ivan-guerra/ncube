@@ -3,7 +3,7 @@
 #include <curses.h>
 #include <ncurses.h>
 
-namespace nshapes {
+namespace ncube {
 namespace graphics {
 
 [[nodiscard]] static int WrapAround(int v, int delta, int minval, int maxval) {
@@ -74,4 +74,4 @@ void DrawInstructions(const ScreenDimension& screen_dim) {
 }
 
 }  // namespace graphics
-}  // namespace nshapes
+}  // namespace ncube

@@ -1,13 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(nshapes DESCRIPTION "render 3D shapes using ncurses")
+project(ncube DESCRIPTION "render a 3D cube using ncurses")
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
 
-set(NSHAPES_BIN_DIR
+set(NCUBE_BIN_DIR
     "${CMAKE_SOURCE_DIR}/bin"
     CACHE STRING "${PROJECT_NAME} binary directory.")
-set(NSHAPES_INCLUDE_DIR
+set(NCUBE_INCLUDE_DIR
     "${CMAKE_SOURCE_DIR}/include"
     CACHE STRING "${PROJECT_NAME} include directory.")
 
