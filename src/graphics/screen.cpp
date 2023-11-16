@@ -39,16 +39,16 @@ bool UpdateCursor(const ScreenDimension& screen_dim, Point2D& cursor) {
   int key = getch();
   switch (key) {
     case KEY_UP:
-      cursor.y = WrapAround(cursor.y, 1, 0, screen_dim.height);
+      cursor.y = WrapAround(cursor.y, 1, 0, 2 * screen_dim.height);
       break;
     case KEY_DOWN:
-      cursor.y = WrapAround(cursor.y, -1, 0, screen_dim.height);
+      cursor.y = WrapAround(cursor.y, -1, 0, 2 * screen_dim.height);
       break;
     case KEY_LEFT:
-      cursor.x = WrapAround(cursor.x, -1, 0, screen_dim.width);
+      cursor.x = WrapAround(cursor.x, -1, 0, 2 * screen_dim.width);
       break;
     case KEY_RIGHT:
-      cursor.x = WrapAround(cursor.x, 1, 0, screen_dim.width);
+      cursor.x = WrapAround(cursor.x, 1, 0, 2 * screen_dim.width);
       break;
     case 'q':
       return false;
