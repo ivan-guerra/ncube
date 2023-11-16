@@ -1,29 +1,80 @@
+#include <getopt.h>
+
 #include <cstdlib>
+#include <iostream>
+#include <string>
 
 #include "common/types.h"
 #include "common/util.h"
 #include "cube/cube.h"
 #include "graphics/screen.h"
 
-void RunDrawLoop(const ncube::graphics::ScreenDimension& screen_dim) {
-  ncube::Point2D cursor = {.x = screen_dim.width / 2.0,
-                           .y = screen_dim.height / 2.0};
-  ncube::ViewConfig view;
-  view.near_plane_width = screen_dim.width;
-  view.near_plane_height = screen_dim.height;
+void PrintUsage() noexcept {
+  std::cout << "usage: ncube [OPTION]..." << std::endl;
+  std::cout << "ncurses rendering of a 3D cube" << std::endl;
+  std::cout << "\t-f, --fov-angle-deg\tFOV angle in degrees" << std::endl;
+  std::cout << "\t-c, --camera-dist\tdistance of the camera from the center of "
+               "the cube"
+            << std::endl;
+  std::cout << "\t-n, --num-edge-points\tnumber of points per edge"
+            << std::endl;
+  std::cout << "\t-h, --help\t\tprint this help page" << std::endl;
+}
 
-  ncube::Cube cube;
-  while (ncube::graphics::UpdateCursor(screen_dim, cursor)) {
+void RunDrawLoop(const ncube::Cube& cube, const ncube::ViewConfig& view,
+                 const ncube::graphics::ScreenDimension& dim) {
+  ncube::Point2D cursor = {.x = view.near_plane_width / 2.0,
+                           .y = view.near_plane_height / 2.0};
+  while (ncube::graphics::UpdateCursor(dim, cursor)) {
     ncube::Faces2D faces =
         ncube::Get2DProjection(cube, view, cursor.x, cursor.y);
     ncube::graphics::DrawObject(faces);
-    ncube::graphics::DrawInstructions(screen_dim);
+    ncube::graphics::DrawInstructions(dim);
   }
 }
 
-int main() {
+int main(int argc, char** argv) {
+  struct option long_options[] = {
+      {"fov-angle-deg", required_argument, 0, 'f'},
+      {"camera-dist", required_argument, 0, 'c'},
+      {"num-edge-points", required_argument, 0, 'n'},
+      {"help", no_argument, 0, 'h'},
+      {0, 0, 0, 0},
+  };
+
+  int opt = 0;
+  int long_index = 0;
+  ncube::ViewConfig view;
+  unsigned int num_edge_points = 5;
+  while (-1 != (opt = ::getopt_long(argc, argv, "hf:c:n:",
+                                    static_cast<struct option*>(long_options),
+                                    &long_index))) {
+    switch (opt) {
+      case 'f':
+        view.fov_angle_deg = std::stod(optarg);
+        break;
+      case 'c':
+        view.camera_distance = std::stod(optarg);
+        break;
+      case 'n':
+        num_edge_points = std::stoul(optarg);
+        break;
+      case 'h':
+        PrintUsage();
+        std::exit(EXIT_SUCCESS);
+      case '?':
+        std::cerr << "error: unknown option -> " << opt << std::endl;
+        std::exit(EXIT_FAILURE);
+    }
+  }
+
+  ncube::Cube cube;
+  cube.AddPointsToEdges(num_edge_points);
+
   /* ncurses screen initialization */
-  ncube::graphics::ScreenDimension screen_dim = ncube::graphics::InitScreen();
+  ncube::graphics::ScreenDimension dim = ncube::graphics::InitScreen();
+  view.near_plane_width = dim.width;
+  view.near_plane_height = dim.height;
 
   /* set a reasonable input delay keeping in mind that higher delays make the
    * application seem laggy and that lower delays will waste CPU cycles
@@ -32,7 +83,7 @@ int main() {
   ncube::graphics::EnableInputDelay(kInputDelayMs);
 
   /* draw the shape and allow the user to rotate it using the arrow keys */
-  RunDrawLoop(screen_dim);
+  RunDrawLoop(cube, view, dim);
 
   /* cleanup ncurses resources */
   ncube::graphics::DisableInputDelay();
