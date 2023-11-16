@@ -6,7 +6,7 @@
 
 namespace ncube {
 
-Point3D Cube::Midpoint(const Point3D& a, const Point3D b) noexcept {
+Point3D Cube::Midpoint(const Point3D& a, const Point3D b) const noexcept {
   Point3D midpoint;
   midpoint.x = (a.x + b.x) / 2.0;
   midpoint.y = (a.y + b.y) / 2.0;
@@ -16,15 +16,15 @@ Point3D Cube::Midpoint(const Point3D& a, const Point3D b) noexcept {
 }
 
 Face3D Cube::GenPoints(const Point3D a, const Point3D& b,
-                       unsigned int num_points) {
-  if (num_points <= 0) {
-    return {};
-  }
-
+                       unsigned int num_points) const {
   using PointPair = std::pair<Point3D, Point3D>;
   std::queue<PointPair> buffer;
   buffer.emplace(a, b);
 
+  /* This a BFS traversal of the tree that is formed by recursively finding the
+   * midpoint, m, of a and b, then the midpoint of a and m, m and b, and so on.
+   * The process terminates when we have generated the requested number of
+   * points: num_points. */
   Face3D points;
   while (points.size() != num_points) {
     PointPair pp = buffer.front();
@@ -39,7 +39,7 @@ Face3D Cube::GenPoints(const Point3D a, const Point3D& b,
   return points;
 }
 
-Face3D Cube::ExpandFace(const Face3D& face, unsigned int num_points) {
+Face3D Cube::ExpandFace(const Face3D& face, unsigned int num_points) const {
   Face3D expanded_face = GenPoints(face.front(), face.back(), num_points);
   for (unsigned int i = 1; i < face.size(); ++i) {
     Face3D points = GenPoints(face[i - 1], face[i], num_points);

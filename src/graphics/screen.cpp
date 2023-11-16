@@ -15,7 +15,7 @@ namespace graphics {
   }
 }
 
-ScreenDimension InitScreen() {
+ScreenDimension InitScreen() noexcept {
   initscr();
   cbreak();             /* disable line buffering */
   keypad(stdscr, TRUE); /* enable the keypad so we can work with arrow keys */
@@ -29,13 +29,15 @@ ScreenDimension InitScreen() {
   return screen_dim;
 }
 
-void TerminateScreen() { endwin(); }
+void TerminateScreen() noexcept { endwin(); }
 
-void EnableInputDelay(int delay_ms) { timeout(delay_ms); }
+void Clear() noexcept { clear(); }
 
-void DisableInputDelay() { timeout(-1); }
+void EnableInputDelay(int delay_ms) noexcept { timeout(delay_ms); }
 
-bool UpdateCursor(const ScreenDimension& screen_dim, Point2D& cursor) {
+void DisableInputDelay() noexcept { timeout(-1); }
+
+bool UpdateCursor(const ScreenDimension& screen_dim, Point2D& cursor) noexcept {
   int key = getch();
   switch (key) {
     case KEY_UP:
@@ -57,8 +59,7 @@ bool UpdateCursor(const ScreenDimension& screen_dim, Point2D& cursor) {
   return true;
 }
 
-void DrawObject(const Faces2D& faces) {
-  clear();
+void DrawObject(const Faces2D& faces) noexcept {
   for (const Face2D& face : faces) {
     for (const Point2D& point : face) {
       mvaddch(point.y, point.x, '+');
@@ -67,7 +68,7 @@ void DrawObject(const Faces2D& faces) {
   refresh();
 }
 
-void DrawInstructions(const ScreenDimension& screen_dim) {
+void DrawInstructions(const ScreenDimension& screen_dim) noexcept {
   mvprintw(screen_dim.height - 1, 0, "%s",
            "use the arrow keys to rotate the cube, press q to quit");
   refresh();

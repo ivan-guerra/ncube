@@ -8,7 +8,7 @@ namespace ncube {
 
 static constexpr double kPi = 3.1415926535;
 
-[[nodiscard]] static double Transform2DTo3D(double xy, double z,
+[[nodiscard]] static double Transform3DTo2D(double xy, double z,
                                             double fov_angle_deg) {
   const double kAngleRad = (fov_angle_deg / 180.0) * kPi;
   return (xy / (z * std::tan(kAngleRad / 2.0)));
@@ -41,8 +41,8 @@ static constexpr double kPi = 3.1415926535;
   };
 }
 
-Faces2D Get2DProjection(const Cube &cube, const ViewConfig &conf,
-                        double cursor_x, double cursor_y) {
+Faces2D RotateAndProject3Dto2D(const Cube &cube, const ViewConfig &conf,
+                               double cursor_x, double cursor_y) {
   const double kCursorXRatio = (cursor_x / conf.near_plane_width) * kPi;
   const double kCursorYRatio = (cursor_y / conf.near_plane_height) * kPi;
 
@@ -59,9 +59,9 @@ Faces2D Get2DProjection(const Cube &cube, const ViewConfig &conf,
 
       /* perform a perspective projection */
       Point2D projection_2d = {
-          .x = Transform2DTo3D(rotated_point.x, rotated_point.z,
+          .x = Transform3DTo2D(rotated_point.x, rotated_point.z,
                                conf.fov_angle_deg),
-          .y = Transform2DTo3D(rotated_point.y, rotated_point.z,
+          .y = Transform3DTo2D(rotated_point.y, rotated_point.z,
                                conf.fov_angle_deg)};
 
       /* shift the coordinate to account for the fact the origin is the top left

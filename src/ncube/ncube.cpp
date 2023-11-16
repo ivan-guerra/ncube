@@ -11,7 +11,7 @@
 
 void PrintUsage() noexcept {
   std::cout << "usage: ncube [OPTION]..." << std::endl;
-  std::cout << "ncurses rendering of a 3D cube" << std::endl;
+  std::cout << "ncurses rendering of a cube" << std::endl;
   std::cout << "\t-f, --fov-angle-deg\tFOV angle in degrees" << std::endl;
   std::cout << "\t-c, --camera-dist\tdistance of the camera from the center of "
                "the cube"
@@ -27,7 +27,9 @@ void RunDrawLoop(const ncube::Cube& cube, const ncube::ViewConfig& view,
                            .y = view.near_plane_height / 2.0};
   while (ncube::graphics::UpdateCursor(dim, cursor)) {
     ncube::Faces2D faces =
-        ncube::Get2DProjection(cube, view, cursor.x, cursor.y);
+        ncube::RotateAndProject3Dto2D(cube, view, cursor.x, cursor.y);
+
+    ncube::graphics::Clear();
     ncube::graphics::DrawObject(faces);
     ncube::graphics::DrawInstructions(dim);
   }
@@ -73,6 +75,8 @@ int main(int argc, char** argv) {
 
   /* ncurses screen initialization */
   ncube::graphics::ScreenDimension dim = ncube::graphics::InitScreen();
+
+  /* our terminal window is our near plane */
   view.near_plane_width = dim.width;
   view.near_plane_height = dim.height;
 
@@ -82,7 +86,7 @@ int main(int argc, char** argv) {
   const int kInputDelayMs = 100;
   ncube::graphics::EnableInputDelay(kInputDelayMs);
 
-  /* draw the shape and allow the user to rotate it using the arrow keys */
+  /* draw the cube and allow the user to rotate it using the arrow keys */
   RunDrawLoop(cube, view, dim);
 
   /* cleanup ncurses resources */

@@ -17,6 +17,7 @@ Main()
     pushd $NCUBE_BUILD_DIR > /dev/null
     cmake ../ \
         -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+        -DBUILD_DOCS=ON \
         -DCMAKE_INSTALL_PREFIX=$NCUBE_BIN_DIR \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE && \
         make -j$(nproc) all && \
